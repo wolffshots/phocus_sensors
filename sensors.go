@@ -39,7 +39,7 @@ var sensors = []Sensor{
 }
 
 // Register adds some sensors to Home Assistant MQTT
-func Register() {
+func Register() error {
 	log.Println("Registering sensors")
 	for _, input := range sensors {
 		log.Printf("Registering %s\n", input.Name)
@@ -70,9 +70,10 @@ func Register() {
 			input.DeviceClass,
 		), 10)
 		if err != nil {
-			log.Fatalf("Failed to send initial setup stats to MQTT with err: %v", err)
+			log.Printf("Failed to send initial setup stats to MQTT with err: %v", err)
+			return err
 		}
 		time.Sleep(50 * time.Millisecond)
 	}
-
+	return nil
 }
