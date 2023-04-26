@@ -413,7 +413,7 @@ func Register() error {
 				"name\":\"%s\",\""+
 				"state_topic\":\"%s\",\""+
 				"icon\":\"%s\",\""+
-				"unit\":\"%s\",\""+
+				"unit_of_measurement\":\"%s\",\""+
 				"state_class\":\"%s\",\""+
 				"device_class\":\"%s\",\""+
 				"device\":{\"name\":\"phocus\",\""+
