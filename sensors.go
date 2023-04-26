@@ -2,12 +2,13 @@ package phocus_sensors
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/wolffshots/ha_types/device_classes"
 	"github.com/wolffshots/ha_types/state_classes"
 	"github.com/wolffshots/ha_types/units"
 	"github.com/wolffshots/phocus_mqtt"
-	"log"
-	"time"
 )
 
 // Sensor is the shape of the sensor for the MQTT Home Assistant integration
@@ -31,7 +32,7 @@ var sensors = []Sensor{
 		StateClass:    state_classes.Measurement,
 		DeviceClass:   device_classes.Timestamp,
 		Name:          "Start Time",
-		ValueTemplate: "{{ value_json }}",
+		ValueTemplate: "{{ as_timestamp(value_json) }}",
 		StateTopic:    "phocus/stats/start_time",
 		Icon:          "mdi:clock",
 	}, //err := mqtt.Send("homeassistant/sensor/phocus/start_time/config", 0, true, `{"unique_id":"phocus_start_time","name":"phocus - Start Time","state_topic":"phocus/stats/start_time","icon":"mdi:hammer-wrench","device":{"name":"phocus","identifiers":["phocus"],"model":"phocus","manufacturer":"phocus","sw_version":"1.1.0"},"force_update":false}`, 10)
