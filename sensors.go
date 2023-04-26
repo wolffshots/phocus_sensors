@@ -432,7 +432,7 @@ func Register() error {
 		)
 
 		if input.ValueTemplate != "" {
-			sensor_string += ", \"value_template\":\"%s\""
+			sensor_string += fmt.Sprintf(", \"value_template\":\"%s\"", input.ValueTemplate)
 		}
 		sensor_string += "}"
 
