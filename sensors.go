@@ -32,11 +32,21 @@ var sensors = []Sensor{
 		StateClass:    state_classes.Measurement,
 		DeviceClass:   device_classes.Timestamp,
 		Name:          "Start Time",
-		ValueTemplate: "{{ as_timestamp(value_json) }}",
+		ValueTemplate: "",
 		StateTopic:    "phocus/stats/start_time",
 		Icon:          "mdi:clock",
-	}, //err := mqtt.Send("homeassistant/sensor/phocus/start_time/config", 0, true, `{"unique_id":"phocus_start_time","name":"phocus - Start Time","state_topic":"phocus/stats/start_time","icon":"mdi:hammer-wrench","device":{"name":"phocus","identifiers":["phocus"],"model":"phocus","manufacturer":"phocus","sw_version":"1.1.0"},"force_update":false}`, 10)
-
+	},
+	{
+		SensorTopic:   "homeassistant/sensor/phocus/error/config",
+		UniqueId:      "phocus_last_error",
+		Unit:          units.None,
+		StateClass:    state_classes.Measurement,
+		DeviceClass:   device_classes.None,
+		Name:          "Last Reported Error",
+		ValueTemplate: "",
+		StateTopic:    "phocus/stats/error",
+		Icon:          "mdi:hammer-wrench",
+	},
 }
 
 // Register adds some sensors to Home Assistant MQTT
@@ -44,13 +54,13 @@ func Register() error {
 	log.Println("Registering sensors")
 	for _, input := range sensors {
 		log.Printf("Registering %s\n", input.Name)
-		err := phocus_mqtt.Send(input.SensorTopic, 0, true, fmt.Sprintf(
+
+		sensor_string := fmt.Sprintf(
 			"{\""+
 				"unique_id\":\"%s\",\""+
 				"name\":\"%s\",\""+
 				"state_topic\":\"%s\",\""+
 				"icon\":\"%s\",\""+
-				"value_template\":\"%s\",\""+
 				"unit\":\"%s\",\""+
 				"state_class\":\"%s\",\""+
 				"device_class\":\"%s\",\""+
@@ -59,17 +69,22 @@ func Register() error {
 				"model\":\"phocus\",\""+
 				"manufacturer\":\"phocus\",\""+
 				"sw_version\":\"1.1.0\"},\""+
-				"force_update\":false"+
-				"}",
+				"force_update\":false",
 			input.UniqueId,
 			input.Name,
 			input.StateTopic,
 			input.Icon,
-			input.ValueTemplate,
 			input.Unit,
 			input.StateClass,
 			input.DeviceClass,
-		), 10)
+		)
+
+		if input.ValueTemplate != "" {
+			sensor_string += "value_template\":\"%s\",\""
+		}
+		sensor_string += "}"
+
+		err := phocus_mqtt.Send(input.SensorTopic, 0, true, sensor_string, 10)
 		if err != nil {
 			log.Printf("Failed to send initial setup stats to MQTT with err: %v", err)
 			return err
