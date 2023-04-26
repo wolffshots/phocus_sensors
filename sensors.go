@@ -29,7 +29,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/start_time/config",
 		UniqueId:      "phocus_start_time",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.Timestamp,
 		Name:          "Start Time",
 		ValueTemplate: "",
