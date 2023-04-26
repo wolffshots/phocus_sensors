@@ -421,7 +421,7 @@ func Register() error {
 				"model\":\"phocus\",\""+
 				"manufacturer\":\"phocus\",\""+
 				"sw_version\":\"1.1.0\"},\""+
-				"force_update\":false",
+				"force_update\":false\"",
 			input.UniqueId,
 			input.Name,
 			input.StateTopic,
@@ -432,7 +432,7 @@ func Register() error {
 		)
 
 		if input.ValueTemplate != "" {
-			sensor_string += "value_template\":\"%s\",\""
+			sensor_string += ", \"value_template\":\"%s\",\""
 		}
 		sensor_string += "}"
 
