@@ -425,13 +425,13 @@ func Register() error {
 			input.Icon,
 		)
 		if input.Unit != "" {
-			sensor_string += fmt.Sprintf("unit_of_measurement\":\"%s\",\"", input.Unit)
+			sensor_string += fmt.Sprintf(", \"unit_of_measurement\":\"%s\"", input.Unit)
 		}
 		if input.StateClass != "" {
-			sensor_string += fmt.Sprintf("state_class\":\"%s\",\"", input.StateClass)
+			sensor_string += fmt.Sprintf(", \"state_class\":\"%s\"", input.StateClass)
 		}
 		if input.DeviceClass != "" {
-			sensor_string += fmt.Sprintf("device_class\":\"%s\",\"", input.DeviceClass)
+			sensor_string += fmt.Sprintf(", \"device_class\":\"%s\"", input.DeviceClass)
 		}
 		if input.ValueTemplate != "" {
 			sensor_string += fmt.Sprintf(", \"value_template\":\"%s\"", input.ValueTemplate)
