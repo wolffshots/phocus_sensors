@@ -29,7 +29,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/start_time/config",
 		UniqueId:      "phocus_start_time",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.Timestamp,
 		Name:          "Start Time",
 		ValueTemplate: "",
@@ -40,7 +40,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/error/config",
 		UniqueId:      "phocus_last_error",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "Last Reported Error",
 		ValueTemplate: "",
@@ -51,7 +51,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs1_serial/config",
 		UniqueId:      "phocus_qpgs1_serial",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS1 Serial",
 		ValueTemplate: "{{ value_json.SerialNumber }}",
@@ -62,7 +62,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs2_serial/config",
 		UniqueId:      "phocus_qpgs2_serial",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS2 Serial",
 		ValueTemplate: "{{ value_json.SerialNumber }}",
@@ -117,7 +117,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs1_operation_mode/config",
 		UniqueId:      "phocus_qpgs1_operation_mode",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS1 Operation Mode",
 		ValueTemplate: "{{ value_json.OperationMode }}",
@@ -128,7 +128,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs2_operation_mode/config",
 		UniqueId:      "phocus_qpgs2_operation_mode",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS2 Operation Mode",
 		ValueTemplate: "{{ value_json.OperationMode }}",
@@ -271,7 +271,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs1_ac_input_mode/config",
 		UniqueId:      "phocus_qpgs1_ac_input_mode",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS1 AC Input Mode",
 		ValueTemplate: "{{ value_json.InverterStatus.ACInput }}",
@@ -282,7 +282,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs2_ac_input_mode/config",
 		UniqueId:      "phocus_qpgs2_ac_input_mode",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS2 AC Input Mode",
 		ValueTemplate: "{{ value_json.InverterStatus.ACInput }}",
@@ -381,7 +381,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs1_checksum/config",
 		UniqueId:      "phocus_qpgs1_checksum",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS1 Checksum",
 		ValueTemplate: "{{ value_json.Checksum }}",
@@ -392,7 +392,7 @@ var sensors = []Sensor{
 		SensorTopic:   "homeassistant/sensor/phocus/qpgs2_checksum/config",
 		UniqueId:      "phocus_qpgs2_checksum",
 		Unit:          units.None,
-		StateClass:    state_classes.Measurement,
+		StateClass:    state_classes.None,
 		DeviceClass:   device_classes.None,
 		Name:          "QPGS2 Checksum",
 		ValueTemplate: "{{ value_json.Checksum }}",
@@ -413,9 +413,6 @@ func Register() error {
 				"name\":\"%s\",\""+
 				"state_topic\":\"%s\",\""+
 				"icon\":\"%s\",\""+
-				"unit_of_measurement\":\"%s\",\""+
-				"state_class\":\"%s\",\""+
-				"device_class\":\"%s\",\""+
 				"device\":{\"name\":\"phocus\",\""+
 				"identifiers\":[\"phocus\"],\""+
 				"model\":\"phocus\",\""+
@@ -426,11 +423,16 @@ func Register() error {
 			input.Name,
 			input.StateTopic,
 			input.Icon,
-			input.Unit,
-			input.StateClass,
-			input.DeviceClass,
 		)
-
+		if input.Unit != "" {
+			sensor_string += fmt.Sprintf("unit_of_measurement\":\"%s\",\"", input.Unit)
+		}
+		if input.StateClass != "" {
+			sensor_string += fmt.Sprintf("state_class\":\"%s\",\"", input.StateClass)
+		}
+		if input.DeviceClass != "" {
+			sensor_string += fmt.Sprintf("device_class\":\"%s\",\"", input.DeviceClass)
+		}
 		if input.ValueTemplate != "" {
 			sensor_string += fmt.Sprintf(", \"value_template\":\"%s\"", input.ValueTemplate)
 		}
