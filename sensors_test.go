@@ -1,13 +1,12 @@
 package phocus_sensors
 
 import (
-	"fmt"
 	"log"
 	"testing"
 )
 
 func TestRegister(t *testing.T) {
-	log.Println(fmt.Sprintf(
+	log.Printf(
 		"{\""+
 			"unique_id\":\"%s\",\""+
 			"name\":\"%s\",\""+
@@ -32,6 +31,6 @@ func TestRegister(t *testing.T) {
 		sensors[0].Unit,
 		sensors[0].StateClass,
 		sensors[0].DeviceClass,
-	))
+	)
 	log.Println(sensors)
 }
