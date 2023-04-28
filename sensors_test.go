@@ -20,7 +20,7 @@ func TestRegister(t *testing.T) {
 			"identifiers\":[\"phocus\"],\""+
 			"model\":\"phocus\",\""+
 			"manufacturer\":\"phocus\",\""+
-			"sw_version\":\"1.1.0\"},\""+
+			"sw_version\":\"%s\"},\""+
 			"force_update\":false"+
 			"}",
 		sensors[0].UniqueId,
@@ -31,6 +31,7 @@ func TestRegister(t *testing.T) {
 		sensors[0].Unit,
 		sensors[0].StateClass,
 		sensors[0].DeviceClass,
+		"1.1.1",
 	)
 	log.Println(sensors)
 }

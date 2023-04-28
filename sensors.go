@@ -402,7 +402,8 @@ var sensors = []Sensor{
 }
 
 // Register adds some sensors to Home Assistant MQTT
-func Register() error {
+// version is the current version of the system, added in 1.1.1
+func Register(version string) error {
 	log.Println("Registering sensors")
 	for _, input := range sensors {
 		log.Printf("Registering %s\n", input.Name)
@@ -417,12 +418,13 @@ func Register() error {
 				"identifiers\":[\"phocus\"],\""+
 				"model\":\"phocus\",\""+
 				"manufacturer\":\"phocus\",\""+
-				"sw_version\":\"1.1.0\"},\""+
+				"sw_version\":\"%s\"},\""+
 				"force_update\":false",
 			input.UniqueId,
 			input.Name,
 			input.StateTopic,
 			input.Icon,
+			version,
 		)
 		if input.Unit != "" {
 			sensor_string += fmt.Sprintf(", \"unit_of_measurement\":\"%s\"", input.Unit)

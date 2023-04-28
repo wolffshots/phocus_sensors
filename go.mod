@@ -3,8 +3,8 @@ module github.com/wolffshots/phocus_sensors
 go 1.19
 
 require (
-	github.com/wolffshots/ha_types v0.0.0-20230426122135-d41b060dfd8f
-	github.com/wolffshots/phocus_mqtt v0.0.0-20230426105149-7f39b6f21cd2
+	github.com/wolffshots/ha_types v0.0.0-20230427095531-5eedb97ab9be
+	github.com/wolffshots/phocus_mqtt v0.0.0-20230427095453-31c71b59ce03
 )
 
 require (
